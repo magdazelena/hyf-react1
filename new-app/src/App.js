@@ -1,6 +1,9 @@
 import "./App.css";
+import { useState } from "react";
 import { Link } from "./components/Link";
+
 const shouldRenderParagraph = true;
+
 export default function App() {
   let paragraph = null;
 
@@ -27,17 +30,30 @@ const products = [
 ];
 
 function Product(props) {
-  const name = props.name;
-  return <div>{name}</div>;
+  const { name } = props;
+  const [count, setCount] = useState(0);
+
+  const increment = () => {
+    //setCount(count + 1);
+    //good practice:
+    setCount((previousValue) => previousValue + 1);
+  };
+
+  return (
+    <li>
+      {name} {count}
+      <button onClick={increment}>Increment</button>
+    </li>
+  );
 }
 
 function ProductList() {
   return (
-    <div>
+    <ul>
       {products.map((product, index) => {
         const productName = product.name;
         return <Product key={productName + index} name={productName} />;
       })}
-    </div>
+    </ul>
   );
 }
