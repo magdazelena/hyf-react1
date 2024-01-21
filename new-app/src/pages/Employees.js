@@ -10,7 +10,7 @@ export function Employees() {
     let response;
     try {
       response = await fetch(
-        "https://gist.githubusercontent.com/benna100/5fd674171ea528d7cd1d504e9bb0ca6fsdsd"
+        " https://gist.githubusercontent.com/benna100/5fd674171ea528d7cd1d504e9bb0ca6f/raw"
       );
     } catch (error) {
       setLoading(false);
@@ -31,13 +31,28 @@ export function Employees() {
     fetchData();
   }, []);
 
+  const deleteEmployee = (employeeName) => {
+    setEmployees((previousEmployees) =>
+      previousEmployees.filter((employee) => employee.name !== employeeName)
+    );
+  };
   return (
     <>
       {loading ? <p>Loading</p> : <p>Not loading</p>}
       {error && <p>Error happened!</p>}
       {employees.map((employee, index) => (
-        <p key={index}>{employee.name}</p>
+        <Employee key={index} name={employee.name} onDelete={deleteEmployee} />
       ))}
+    </>
+  );
+}
+
+function Employee(props) {
+  const { name, onDelete } = props;
+  return (
+    <>
+      <p>{`Employee ${name}`}</p>{" "}
+      <button onClick={() => onDelete(name)}>Delete me</button>
     </>
   );
 }
