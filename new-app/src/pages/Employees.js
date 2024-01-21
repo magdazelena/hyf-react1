@@ -4,6 +4,7 @@ export function Employees() {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+
   const fetchData = async () => {
     setLoading(true);
     let response;
@@ -15,6 +16,7 @@ export function Employees() {
       setLoading(false);
       setError(true);
     }
+
     if (!response) return;
 
     const data = await response.json();
