@@ -3,39 +3,39 @@ import { ListItem } from "./ListItem";
 
 export function List() {
   const [list, setList] = useState(initalList);
-
-  //   useEffect(() => {
-  //     console.log(list);
-  //   }, [list]); //dependency on certain changes
-
-  useEffect(() => {
-    console.log("something");
-  }); //no dependency = all the changes
-
-  useEffect(() => {
-    console.log("hello");
-  }, []); // empty dependency array = only when when component mounts;
+  const [newTask, setNewTask] = useState("");
 
   const addTask = () => {
-    const newTask = {
-      description: "New task",
+    if (newTask.length === 0) return;
+    const newTaskObj = {
+      description: newTask,
       deadline: "2024/01/14",
       index: list.length + 1,
     };
-    setList((previousState) => [...previousState, newTask]);
+    setList((previousState) => [...previousState, newTaskObj]);
+    setNewTask("");
   };
+
   return (
-    <ul>
-      <WatchCount />
-      <button onClick={addTask}>Add item</button>
-      {list.map((listItem) => (
-        <ListItem
-          key={listItem.index}
-          description={listItem.description}
-          deadline={listItem.deadline}
-        />
-      ))}
-    </ul>
+    <div>
+      <input
+        type="text"
+        value={newTask}
+        onChange={(e) => setNewTask(e.target.value)}
+      />
+      <button disabled={newTask === ""} onClick={addTask}>
+        Add item
+      </button>
+      <ul>
+        {list.map((listItem) => (
+          <ListItem
+            key={listItem.index}
+            description={listItem.description}
+            deadline={listItem.deadline}
+          />
+        ))}
+      </ul>
+    </div>
   );
 }
 
