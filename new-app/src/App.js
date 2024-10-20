@@ -48,12 +48,5 @@ function Product(props) {
 }
 
 function ProductList() {
-  return (
-    <ul>
-      {products.map((product, index) => {
-        const productName = product.name;
-        return <Product key={productName + index} name={productName} />;
-      })}
-    </ul>
-  );
+  return <ul></ul>;
 }

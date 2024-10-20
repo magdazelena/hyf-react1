@@ -2,53 +2,68 @@ import { useEffect, useState } from "react";
 import { ListItem } from "./ListItem";
 
 export function List() {
-  const [list, setList] = useState(initalList);
-  const [newTask, setNewTask] = useState("");
+  const [toDoItem, setToDoItem] = useState("");
+  const [list, setList] = useState([]);
 
-  const addTask = () => {
-    if (newTask.length === 0) return;
-    const newTaskObj = {
-      description: newTask,
-      deadline: "2024/01/14",
-      index: list.length + 1,
-    };
-    setList((previousState) => [...previousState, newTaskObj]);
-    setNewTask("");
+  const handleSubmit = () => {
+    if (!toDoItem) return alert("Wait a minute");
+    setList((previousList) => [...previousList, toDoItem]);
+    setToDoItem("");
   };
-
   return (
     <div>
+      <Clock />
+      <DateComp />
       <input
         type="text"
-        value={newTask}
-        onChange={(e) => setNewTask(e.target.value)}
+        value={toDoItem}
+        onChange={(e) => setToDoItem(e.target.value)}
       />
-      <button disabled={newTask === ""} onClick={addTask}>
-        Add item
-      </button>
+      <button onClick={handleSubmit}>Submit</button>
       <ul>
-        {list.map((listItem) => (
-          <ListItem
-            key={listItem.index}
-            description={listItem.description}
-            deadline={listItem.deadline}
-          />
+        {list.map((item, index) => (
+          <li key={`${item}-${index}`}>{item}</li>
         ))}
       </ul>
     </div>
   );
 }
 
-function WatchCount() {
-  const [count, setCount] = useState(0);
+function Clock() {
+  const [time, setTime] = useState(0);
 
   useEffect(() => {
-    setTimeout(() => {
-      setCount((prev) => prev + 1);
+    const timer = setInterval(() => {
+      setTime((prev) => prev + 1);
     }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
-  return <div>{count}</div>;
+  return <div>{time}</div>;
+}
+
+function DateComp() {
+  const [count, setCount] = useState(0);
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  return (
+    <>
+      <button onClick={() => setCount((count) => count + 1)}>{count}</button>
+      <p>Current time: {time.toUTCString()}</p>
+    </>
+  );
 }
 
 const initalList = [
