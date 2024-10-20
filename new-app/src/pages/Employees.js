@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
+import { useWindowDimensions } from "../hooks/useWindowDimensions";
 
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { width, height } = useWindowDimensions();
+
+  useEffect(() => {
+    console.log(width);
+  }, [width]);
 
   useEffect(() => {
     fetchData();
