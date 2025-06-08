@@ -1,4 +1,4 @@
-export function Button({ text, onClick}) {
+export const Button = ({ text, onClick}) => {
   return (
     <button
       onClick={onClick}
@@ -7,3 +7,4 @@ export function Button({ text, onClick}) {
     </button>
   );
 }
+
