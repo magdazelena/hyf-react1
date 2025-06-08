@@ -1,9 +1,9 @@
-export function Button({ onToggle, todo}) {
+export function Button({ text, onClick}) {
   return (
     <button
-      onClick={onToggle}
+      onClick={onClick}
     >
-      {todo.done ? 'Undo' : 'Done'}
+      {text}
     </button>
   );
 }
