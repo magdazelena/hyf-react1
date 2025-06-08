@@ -1,13 +1,18 @@
-export default function TodoItem({ todo, onToggle }) {
+import { Button } from './Button';
+export default function TodoItem(props) {
+  const { todo, onToggle } = props;
+  const { id, text, done } = todo;
   return (
     <li
-      onClick={() => onToggle(todo.id)}
+      onClick={() => onToggle(id)}
       style={{
         cursor: 'pointer',
-        textDecoration: todo.done ? 'line-through' : 'none',
+        textDecoration: done ? 'line-through' : 'none',
       }}
     >
-      {todo.text}
+      {text}
+      {/* <Button onToggle={} todo={} /> */}
+      <Button {...props} />
     </li>
   );
 }
